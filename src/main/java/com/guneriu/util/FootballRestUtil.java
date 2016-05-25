@@ -1,25 +1,20 @@
 package com.guneriu.util;
 
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.guneriu.config.GKObjectMapper;
-import com.guneriu.message.ExceptionResponse;
-import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
-import java.io.IOException;
 import java.util.Map;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Created by ugur on 14.05.2016.
@@ -90,7 +85,8 @@ public class FootballRestUtil {
             return false;
         }
 
-        int secondsForNextRequest = Integer.parseInt(headers.get(SECONDS_LEFT_FOR_REQUEST_HEADER));
+//        int secondsForNextRequest = Integer.parseInt(headers.get(SECONDS_LEFT_FOR_REQUEST_HEADER));
+        int secondsForNextRequest = 60;
 
         try {
 //            ExceptionResponse exceptionResponse = objectMapper.readValue((String) responseEntity.getBody(), ExceptionResponse.class);

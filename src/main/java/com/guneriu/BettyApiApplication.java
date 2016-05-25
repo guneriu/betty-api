@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.guneriu.config.ServiceConfig;
 import com.guneriu.model.League;
 import com.guneriu.service.FootballSyncService;
-import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -20,6 +20,8 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
+
+import lombok.extern.slf4j.Slf4j;
 
 @SpringBootApplication
 @Slf4j

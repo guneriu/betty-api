@@ -1,12 +1,13 @@
 package com.guneriu.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Data;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Map;
+
+import lombok.Data;
 
 /**
  * Created by ugur on 14.05.2016.
@@ -44,6 +45,15 @@ public class Fixture extends BaseModel {
         private Integer goalsAwayTeam;
     }
 
+    public void extractId() {
+        Map<String, Map<String, String>> links = this.getLinks();
+        links.entrySet().stream().filter(e -> e.getKey().equals("self")).forEach(e -> {
+            String href = e.getValue().get("href");
+            String[] paths = href.split("/");
+            this.setId(Long.valueOf(paths[paths.length - 1]));
+        });
+    }
+
     public void extractTeamIds() {
         Map<String, Map<String, String>> links = this.getLinks();
         links.entrySet().stream().filter(e -> e.getKey().equals("homeTeam") || e.getKey().equals("awayTeam")).forEach(e -> {
@@ -52,7 +62,7 @@ public class Fixture extends BaseModel {
             Long idOfTeam = Long.valueOf(paths[paths.length - 1]);
             if (e.getKey().equals("homeTeam")) {
                 this.setHomeTeamId(idOfTeam);
-            } else if (e.getKey().equals("homeTeam")) {
+            } else if (e.getKey().equals("awayTeam")) {
                 this.setAwayTeamId(idOfTeam);
             }
         });

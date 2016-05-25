@@ -10,7 +10,7 @@ import com.guneriu.repository.PlayerRepository;
 import com.guneriu.repository.TeamRepository;
 import com.guneriu.service.FootballRestService;
 import com.guneriu.service.FootballSyncService;
-import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +18,8 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Created by ugur on 14.05.2016.
@@ -61,16 +63,16 @@ public class FootballSyncServiceImpl implements FootballSyncService {
 
                 Long teamId = team.getId();
                 List<Fixture> fixturesOfTeam = restService.getFixturesOfTeam(teamId);
-
-                fixturesOfTeam.forEach(f -> {f.setTeamId(teamId); f.extractTeamIds();});
-
+//
+                fixturesOfTeam.forEach(f -> {f.extractId(); f.setTeamId(teamId); f.extractTeamIds();});
+//
                 fixtures.addAll(fixturesOfTeam);
-
-                List<Player> playersOfTeam = restService.getPlayersOfTeam(teamId);
-
-                playersOfTeam.forEach(p -> p.setTeamId(teamId));
-
-                players.addAll(playersOfTeam);
+//
+//                List<Player> playersOfTeam = restService.getPlayersOfTeam(teamId);
+//
+//                playersOfTeam.forEach(p -> p.setTeamId(teamId));
+//
+//                players.addAll(playersOfTeam);
             });
 
             teams.addAll(teamsOfLeague);
@@ -78,6 +80,7 @@ public class FootballSyncServiceImpl implements FootballSyncService {
             List<Fixture> fixturesOfLeague = restService.getFixturesOfLeague(leagueId);
 
             fixturesOfLeague.stream().forEach(fixture -> {
+                fixture.extractId();
                 fixture.setLeagueId(leagueId);
                 fixture.extractTeamIds();
             });
